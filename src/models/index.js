@@ -13,7 +13,8 @@ export const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASS
         idle: dbConfig.pool.idle
     },
     define: {
-        timestamps: false
+        timestamps: true,
+        underscored: false,
     },
 });
 

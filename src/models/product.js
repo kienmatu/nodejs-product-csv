@@ -3,7 +3,8 @@ import {sequelize} from './index.js';
 
 const Product = sequelize.define("products", {
     id: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
         primaryKey: true
     },
     name: {
