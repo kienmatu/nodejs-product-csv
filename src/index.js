@@ -1,17 +1,28 @@
 import express from 'express';
-import {getManyProducts, getSingleProduct, importProducts, exportProducts} from "./handlers.js";
+import {exportProducts, findManyProducts, findOneProduct, importProducts} from "./handlers/product.js";
+import {index} from "./handlers/index.js";
 
+const PORT = process.env.PORT || 3000;
 const app = express();
 
-app.get('/products', getManyProducts);
-app.get('/products/:id', getSingleProduct);
-app.post('/products/import', importProducts);
-app.get('/products/export', exportProducts);
+// parse requests of content-type - application/json
+app.use(express.json());
 
-app.listen(PORT, (error) =>{
-        if(!error)
-            console.log("App is listening on port "+ PORT)
-    else
-        console.log("Error occurred, server can't start", error);
+// parse requests of content-type - application/x-www-form-urlencoded
+app.use(express.urlencoded({extended: true}));
+
+app.get('/', index)
+app.get('/api/products', findManyProducts);
+app.get('/api/products/:id', findOneProduct);
+app.post('/api/products/import', importProducts);
+app.get('/api/products/export', exportProducts);
+
+app.listen(PORT, (error) => {
+        if (!error) {
+            console.log("App is listening on port " + PORT)
+        } else {
+            console.log("Error occurred, server can't start", error);
+        }
+
     }
 );
