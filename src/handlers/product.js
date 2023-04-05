@@ -1,6 +1,7 @@
 import Product from "../models/product.js";
 import csv from "fast-csv"
 import fs from "fs";
+import {createObjectCsvWriter} from "csv-writer";
 
 export const findOneProduct = (req, res) => {
     const id = req.params.id;
@@ -36,22 +37,22 @@ export const findManyProducts = (req, res) => {
         });
 }
 
-export const importProducts = (req, res) => {
+export const importProducts = async (req, res) => {
+    if (!req.file) {
+        res.status(400).send('No file is uploaded');
+        return;
+    }
+    const rows = [];
+    let path = "./static/uploads/" + req.file.filename;
     try {
-        if (!req.file) {
-            throw new Error('No file uploaded');
-        }
-
-        const rows = [];
-        let path = "./static/uploads/" + req.file.filename;
-
         const parser = csv.parse({headers: true})
             .on('error', (error) => {
+                //TODO: Try catch on callback doesnt work
                 console.error(error);
                 throw new Error('Error parsing CSV data');
             })
             .on('data', (data) => {
-                console.log(data);
+                // console.log(data);
                 rows.push(data);
             })
             .on('end', async () => {
@@ -66,7 +67,6 @@ export const importProducts = (req, res) => {
                     createdAt: new Date(),
                     updatedAt: new Date(),
                 }));
-                console.log(products)
 
                 // Import the products into the database
                 await Product.bulkCreate(products);
@@ -81,7 +81,42 @@ export const importProducts = (req, res) => {
     }
 }
 
-export const exportProducts = (req, res) => {
-    res.status(200);
-    res.send("Welcome to root URL of Server");
+export const exportProducts = async (req, res) => {
+    const products = await Product.findAll();
+    const dir = './static/exports';
+
+    if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir, {recursive: true});
+    }
+    const fileName = `${dir}/${Date.now()}-products.csv`;
+    const csvWriter = createObjectCsvWriter({
+        path: fileName,
+        header: [
+            {id: 'name', title: 'name'},
+            {id: 'price', title: 'price'},
+            {id: 'description', title: 'description'},
+        ]
+    });
+    await csvWriter.writeRecords(products)
+        .then(async () => {
+                console.log('CSV file exported successfully');
+                await fs.readFile(fileName, "UTF-8", function (err, data) {
+                    if (err) {
+                        res.status(500).send(err)
+                    }
+                    res.setHeader('Content-Type', 'text/csv');
+                    res.setHeader('Content-Disposition', 'attachment; filename=products.csv');
+                    res.send(data);
+                })
+            }
+        )
+        .catch(async (err) => {
+            res.status(500).send(err);
+        })
+        .finally(async () => {
+                await fs.unlink(fileName, () => {
+                    "DELETED THE TEMP FILE"
+                });
+            }
+        );
 }

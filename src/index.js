@@ -15,9 +15,9 @@ app.use(express.urlencoded({extended: true}));
 
 app.get('/', index)
 app.get('/api/products', findManyProducts);
-app.get('/api/products/:id', findOneProduct);
 app.post('/api/products/import', uploadFile.single('file'), importProducts);
 app.get('/api/products/export', exportProducts);
+app.get('/api/products/:id', findOneProduct);
 
 app.listen(PORT, (error) => {
         if (!error) {
