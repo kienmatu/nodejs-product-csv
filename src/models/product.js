@@ -1,5 +1,5 @@
 import Sequelize from 'sequelize';
-import {sequelize} from './index.js';
+import {sequelize} from './database.js';
 
 const Product = sequelize.define("products", {
     id: {
@@ -15,6 +15,12 @@ const Product = sequelize.define("products", {
     },
     description: {
         type: Sequelize.STRING
+    },
+    createdAt: {
+        type: Sequelize.DATE,
+    },
+    updatedAt: {
+        type: Sequelize.DATE,
     }
 });
 
