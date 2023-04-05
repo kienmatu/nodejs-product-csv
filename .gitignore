@@ -2,3 +2,4 @@
 yarn.lock
 /static/exports
 /sample-csv
+data/
