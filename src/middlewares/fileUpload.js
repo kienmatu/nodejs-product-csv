@@ -1,10 +1,11 @@
 import fs from 'fs';
 import multer from 'multer';
+import appDir from "../utils/pathHelper.js";
 
 
 const storage = multer.diskStorage({
     destination: (_req, file, callback) => {
-        const dir = './static/uploads';
+        const dir = appDir + 'static/uploads';
 
         if (!fs.existsSync(dir)) {
             fs.mkdirSync(dir, {recursive: true});

@@ -1,8 +1,8 @@
-import Product from "../models/product.js";
+import {Category, Product} from "../models/index.js";
 import csv from "fast-csv"
 import fs from "fs";
 import {createObjectCsvWriter} from "csv-writer";
-
+import appDir from "../utils/pathHelper.js";
 export const findOneProduct = (req, res) => {
     const id = req.params.id;
     Product.findByPk(id)
@@ -39,31 +39,50 @@ export const findManyProducts = (req, res) => {
 
 export const importProducts = async (req, res) => {
     if (!req.file) {
+        console.log(req.file)
         res.status(400).send('No file is uploaded');
         return;
     }
     const rows = [];
-    let path = "./static/uploads/" + req.file.filename;
+    let path = appDir + "static/uploads/" + req.file.filename;
+    const categories = await Category.findAll({
+        attributes: ['id', 'name', 'code']
+    })
+    const categoryMap = new Map(
+        categories.map(c => {
+            return [c.dataValues.code, c.dataValues];
+        }),
+    );
+    console.log(categoryMap)
+    console.log(categoryMap.get("BPC"))
+
     try {
+        let rowNumber = 1;
         const parser = csv.parse({headers: true})
-            .on('error', (error) => {
-                //TODO: Try catch on callback doesnt work
-                console.error(error);
-                throw new Error('Error parsing CSV data');
+            .on('error', async (err) => {
+                console.error(err.message);
+                await fs.promises.unlink(path);
+                res.status(400).send(err.message);
             })
             .on('data', (data) => {
-                // console.log(data);
-                rows.push(data);
+                const category = categoryMap.get(data.categoryCode)
+                if (!category) {
+                    throw new Error(`Row ${rowNumber}, category not found.\nData: ${JSON.stringify(data)}`)
+                }
+                rows.push({...data, categoryId: category.id});
+
+                rowNumber++;
             })
             .on('end', async () => {
                 // Remove the uploaded file after parsing
                 await fs.promises.unlink(path);
 
                 // Map the parsed data into the Product model
-                const products = rows.map(({name, price, description}) => ({
+                const products = rows.map(({name, price, description, categoryId}) => ({
                     name,
                     price,
                     description,
+                    categoryId,
                     createdAt: new Date(),
                     updatedAt: new Date(),
                 }));
@@ -76,14 +95,14 @@ export const importProducts = async (req, res) => {
 
         fs.createReadStream(path).pipe(parser);
     } catch (err) {
-        console.error(err);
+        console.error(err.message);
         res.status(500).send('Internal server error');
     }
 }
 
 export const exportProducts = async (req, res) => {
     const products = await Product.findAll();
-    const dir = './static/exports';
+    const dir = appDir + 'static/exports';
 
     if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir, {recursive: true});
@@ -95,6 +114,7 @@ export const exportProducts = async (req, res) => {
             {id: 'name', title: 'name'},
             {id: 'price', title: 'price'},
             {id: 'description', title: 'description'},
+            {id: 'categoryCode', title: 'categoryCode'},
         ]
     });
     await csvWriter.writeRecords(products)
@@ -115,7 +135,7 @@ export const exportProducts = async (req, res) => {
         })
         .finally(async () => {
                 await fs.unlink(fileName, () => {
-                    "DELETED THE TEMP FILE"
+                    console.log("DELETED THE TEMP FILE")
                 });
             }
         );
