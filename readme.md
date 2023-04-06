@@ -16,3 +16,11 @@ RUN:
 ```bash
 node csv-generator.js
 ```
+
+## Benchmark
+
+Remember to chmod the execution permission:
+
+```bash
+chmod +x ./bench/v1.bash
+```

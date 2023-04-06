@@ -1,5 +1,5 @@
 /node_modules
 yarn.lock
-/static/exports
-/sample-csv
+/static
+/bench/sample-csv
 data/

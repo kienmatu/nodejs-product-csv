@@ -1,4 +1,4 @@
-import Product from "../models/product.js";
+import {Product} from "../models/index.js";
 
 export const index = async (req, res) => {
     try {
@@ -18,7 +18,7 @@ export const index = async (req, res) => {
             pages.push(i);
         }
 
-        res.render('../static/views/index', {
+        res.render('index', {
             products: products.rows,
             pages: pages,
             totalPages: pages.length,
@@ -26,7 +26,7 @@ export const index = async (req, res) => {
         });
     } catch (e) {
         console.error(e)
-        res.render('../static/views/index');
+        res.render('index');
     }
 
 }

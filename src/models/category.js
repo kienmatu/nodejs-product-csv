@@ -1,23 +1,20 @@
 import Sequelize from 'sequelize';
 import sequelize from './sequelize.js';
 
-const Product = sequelize.define("products", {
+const Category = sequelize.define("categories", {
     id: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
         primaryKey: true
     },
     name: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING
     },
-    price: {
-        type: Sequelize.FLOAT,
+    code: {
+        type: Sequelize.STRING
     },
     description: {
-        type: Sequelize.STRING,
-    },
-    categoryId: {
-        type: Sequelize.UUID,
+        type: Sequelize.STRING
     },
     createdAt: {
         type: Sequelize.DATE,
@@ -27,5 +24,4 @@ const Product = sequelize.define("products", {
     }
 });
 
-
-export default Product;
+export default Category;

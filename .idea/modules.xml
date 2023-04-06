@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/nodejs-worker-process.iml" filepath="$PROJECT_DIR$/.idea/nodejs-worker-process.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/nodejs-product-csv-manager.iml" filepath="$PROJECT_DIR$/.idea/nodejs-product-csv-manager.iml" />
     </modules>
   </component>
 </project>
