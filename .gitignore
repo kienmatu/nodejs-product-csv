@@ -3,3 +3,4 @@ yarn.lock
 /static
 /bench/sample-csv
 data/
+.idea/

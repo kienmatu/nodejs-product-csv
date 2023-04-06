@@ -4,32 +4,12 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1ab47691-39b3-4dcc-8306-7b13295b425b" name="Changes" comment="">
+    <list default="true" id="1ab47691-39b3-4dcc-8306-7b13295b425b" name="Changes" comment="Feat: Update Product using category foreign key&#10;- Add validation&#10;- Update generator&#10;- Update seed sql">
       <change afterPath="$PROJECT_DIR$/.idea/nodejs-product-csv-manager.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bench/v1.bash" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/middlewares/logger.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/category.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/index.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/utils/pathHelper.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/git_toolbox_prj.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/nodejs-worker-process.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/csv-generator.js" beforeDir="false" afterPath="$PROJECT_DIR$/csv-generator.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/readme.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/seed.sql" beforeDir="false" afterPath="$PROJECT_DIR$/seed.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/handlers/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/handlers/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/handlers/product.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/handlers/product.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/middlewares/fileUpload.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/middlewares/fileUpload.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/database.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/sequelize.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/product.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/product.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/views/index.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/index.ejs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,6 +77,11 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Feat: Update Product using category foreign key&#10;- Add validation&#10;- Update generator&#10;- Update seed sql&#10;- Add path helper&#10;- Add logger middleware" />
+    <MESSAGE value="Feat: Update Product using category foreign key&#10;- Add validation&#10;- Update generator&#10;- Update seed sql" />
+    <option name="LAST_COMMIT_MESSAGE" value="Feat: Update Product using category foreign key&#10;- Add validation&#10;- Update generator&#10;- Update seed sql" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
