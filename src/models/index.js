@@ -1,8 +1,8 @@
-import Product from "./product.js";
-import Category from "./category.js";
+import ProductInit from "./productInit.js";
+import CategoryInit from "./categoryInit.js";
 import Sequelize from "sequelize";
 
-Category.Products = Category.hasMany(Product,
+CategoryInit.Products = CategoryInit.hasMany(ProductInit,
     {
         foreignKey: {
             name: 'categoryId',
@@ -11,11 +11,11 @@ Category.Products = Category.hasMany(Product,
     }
 );
 
-Product.belongsTo(Category, {
+ProductInit.belongsTo(CategoryInit, {
     foreignKey: {
         name: 'categoryId',
         type: Sequelize.UUID
     }
 });
 
-export {Product, Category}
+export {ProductInit as Product, CategoryInit as Category}

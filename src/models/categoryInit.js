@@ -1,7 +1,7 @@
 import Sequelize from 'sequelize';
 import sequelize from './sequelize.js';
 
-const Category = sequelize.define("categories", {
+const CategoryInit = sequelize.define("categories", {
     id: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
@@ -24,4 +24,4 @@ const Category = sequelize.define("categories", {
     }
 });
 
-export default Category;
+export default CategoryInit;

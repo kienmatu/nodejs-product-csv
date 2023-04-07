@@ -1,4 +1,4 @@
-# NODEJS IMPORTER API
+# NODEJS PRODUCT CSV IMPORTER API
 
 #### AUTHOR: KIEN DINH
 
@@ -18,9 +18,15 @@ node csv-generator.js
 ```
 
 ## Benchmark
+I use [autocannon](https://github.com/mcollina/autocannon) for load/ stress testing, just use the nodejs ecosystem :>.
 
 Remember to chmod the execution permission:
 
 ```bash
 chmod +x ./bench/v1.bash
 ```
+### Benchmark v1
+Branch: `feat/v1-import-and-export-normally`
+
+The first version i just focusing on implementing a lightweight API. 
+Then it just contains sample endpoints, apply main techniques like: connection pooling, bulk insert, caching file.

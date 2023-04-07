@@ -1,9 +1,16 @@
+import colors from "colors";
+
 const logger = (req, res, next) => {
     res.on('finish', () => {
-        console.log('\x1b[32m', `\x1b[42m\x1b[90mHTTP ${req.method}\x1b[0m`, req.url,
-            res.statusCode >= 500 ? '\x1b[41m' : res.statusCode >= 400 ? '\x1b[31m' :
-                res.statusCode >= 300 ? '\x1b[36m' : res.statusCode >= 200 ? '\x1b[32m' : '\x1b[0m',
-            res.statusCode, '\x1b[0m', new Date().toISOString());
+        let color;
+        if (res.statusCode >= 500) {
+            color = colors.red.bold;
+        } else if (res.statusCode >= 300) {
+            color = colors.yellow.bold;
+        } else {
+            color = colors.green.bold;
+        }
+        console.log(color(`${req.method}: ${res.statusCode}`), new Date().toISOString());
     })
     next();
 }

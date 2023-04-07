@@ -72,8 +72,8 @@ const generateProductsCsv = (rows) => {
         header: [
             {id: 'name', title: 'name'},
             {id: 'price', title: 'price'},
-            {id: 'description', title: 'description'},
             {id: 'categoryCode', title: 'categoryCode'},
+            {id: 'description', title: 'description'},
         ]
     });
 
@@ -82,8 +82,8 @@ const generateProductsCsv = (rows) => {
         data.push({
             name: faker.commerce.productName(),
             price: faker.commerce.price(),
-            description: faker.commerce.productDescription(),
             categoryCode: faker.helpers.arrayElement(categoryCodes),
+            description: faker.commerce.productDescription(),
         });
     }
 

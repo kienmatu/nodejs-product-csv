@@ -1,7 +1,7 @@
 import Sequelize from 'sequelize';
 import sequelize from './sequelize.js';
 
-const Product = sequelize.define("products", {
+const ProductInit = sequelize.define("products", {
     id: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
@@ -28,4 +28,4 @@ const Product = sequelize.define("products", {
 });
 
 
-export default Product;
+export default ProductInit;

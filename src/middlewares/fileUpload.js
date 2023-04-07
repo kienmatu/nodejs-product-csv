@@ -13,7 +13,7 @@ const storage = multer.diskStorage({
         callback(null, dir);
     },
     filename: (_req, file, callback) => {
-        callback(null, `${Date.now()}-${file.originalname}`);
+        callback(null, `${process.hrtime()}-${file.originalname}`);
     },
 });
 

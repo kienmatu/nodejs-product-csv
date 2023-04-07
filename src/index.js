@@ -2,7 +2,6 @@ import express from 'express';
 import {exportProducts, findManyProducts, findOneProduct, importProducts} from "./handlers/product.js";
 import {index} from "./handlers/index.js";
 import uploadMiddleware from './middlewares/fileUpload.js';
-import monitor from "express-status-monitor";
 import path from "path"
 import logger from "./middlewares/logger.js";
 
@@ -18,8 +17,6 @@ app.use(express.json());
 
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({extended: true}));
-// monitoring
-app.use(monitor());
 
 app.use(logger);
 

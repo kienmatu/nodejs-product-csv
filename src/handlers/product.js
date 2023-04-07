@@ -17,30 +17,37 @@ export const findOneProduct = (req, res) => {
         })
         .catch(err => {
             res.status(500).send({
-                message: "Error retrieving Product with id=" + id
+                message: `Error retrieving Product with id=${id}`,
+                error: err
             });
         });
 }
 
-export const findManyProducts = (req, res) => {
-    Product.findAll({
-        limit: 1000,
-        order: ['updatedAt', 'desc']
-    })
-        .then(data => {
-            res.send(data);
+export const findManyProducts = async (req, res) => {
+    try {
+        const products = await Product.findAll({
+            limit: 1000,
+            order: [['updatedAt', 'DESC'], ['createdAt', 'DESC']]
         })
-        .catch(err => {
-            res.status(500).send({
-                message: err
-            });
+        res.send({
+            message: 'OK',
+            data: products
         });
+    }
+    catch(err) {
+        console.error(err);
+        res.status(500).send({
+            message: err
+        });
+    }
 }
 
 export const importProducts = async (req, res) => {
     if (!req.file) {
         console.log(req.file)
-        res.status(400).send('No file is uploaded');
+        res.status(400).send({
+            message: 'No file is uploaded'
+        });
         return;
     }
     const rows = [];
@@ -53,16 +60,13 @@ export const importProducts = async (req, res) => {
             return [c.dataValues.code, c.dataValues];
         }),
     );
-    console.log(categoryMap)
-    console.log(categoryMap.get("BPC"))
-
     try {
         let rowNumber = 1;
         const parser = csv.parse({headers: true})
             .on('error', async (err) => {
                 console.error(err.message);
                 await fs.promises.unlink(path);
-                res.status(400).send(err.message);
+                res.status(400).send({message: err.message});
             })
             .on('data', (data) => {
                 const category = categoryMap.get(data.categoryCode)
@@ -90,13 +94,13 @@ export const importProducts = async (req, res) => {
                 // Import the products into the database
                 await Product.bulkCreate(products);
 
-                res.status(200).send('Products imported successfully');
+                res.status(200).send({message: 'Products imported successfully'});
             });
 
         fs.createReadStream(path).pipe(parser);
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Internal server error');
+        res.status(500).send({message: 'Internal server error'});
     }
 }
 

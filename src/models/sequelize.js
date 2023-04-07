@@ -1,5 +1,6 @@
 import dbConfig from "../config/db.js";
 import {Sequelize} from "sequelize";
+import colors from "colors";
 
 export const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
     host: dbConfig.HOST,
@@ -16,6 +17,19 @@ export const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASS
         timestamps: true,
         underscored: false,
     },
+    benchmark: true,
+    logging: (message, execTime) => {
+        if (message.length > 500) {
+            message = message.slice(0, 500) + '... (truncated)';
+            // You can use something like cloud logging...
+        }
+        let color = colors.blue.bold;
+        if (execTime && execTime >= 30) {
+            color = colors.red.bold;
+        }
+
+        console.log(colors.magenta.bold(`[${execTime} ms]`), color(message));
+    }
 });
 
 
