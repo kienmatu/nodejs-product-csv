@@ -26,7 +26,20 @@ Remember to chmod the execution permission:
 ```bash
 chmod +x ./bench/v1.bash
 ```
-
+My machine's specifications:
+```bash
+OS: Ubuntu 22.10 x86_64 
+Host: Latitude 5420 
+Kernel: 5.19.0-38-generic 
+Uptime: 57 mins 
+Packages: 2956 (dpkg), 16 (snap) 
+Shell: zsh 5.9 
+Resolution: 1920x1080 
+DE: GNOME 43.1  
+CPU: 11th Gen Intel i7-1185G7 (8) @ 4. 
+GPU: Intel TigerLake-LP GT2
+Memory: 8181MiB / 31491MiB 
+```
 ### Benchmark v1
 
 Branch: `feat/v1-import-and-export-normally`
