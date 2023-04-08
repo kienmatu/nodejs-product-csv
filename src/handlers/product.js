@@ -25,8 +25,12 @@ export const findOneProduct = (req, res) => {
 
 export const findManyProducts = async (req, res) => {
     try {
+        // should add pagination.
         const products = await Product.findAll({
-            limit: 1000,
+            limit: 200,
+            include: [{// Notice `include` takes an ARRAY
+                model: Category
+            }],
             order: [['updatedAt', 'DESC'], ['createdAt', 'DESC']]
         })
         res.send({
@@ -37,7 +41,8 @@ export const findManyProducts = async (req, res) => {
     catch(err) {
         console.error(err);
         res.status(500).send({
-            message: err
+            message: 'internal error',
+            err: err
         });
     }
 }
@@ -105,7 +110,13 @@ export const importProducts = async (req, res) => {
 }
 
 export const exportProducts = async (req, res) => {
-    const products = await Product.findAll();
+    let limit = req.params.limit;
+    if (!limit || limit > 1000000) {
+        limit = 1000000;
+    }
+    const products = await Product.findAll({
+        limit: limit
+        });
     const dir = appDir + 'static/exports';
 
     if (!fs.existsSync(dir)) {
