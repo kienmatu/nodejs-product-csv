@@ -22,5 +22,5 @@ echo -e "\e[34mTEST 10s with 5 connections get Products\e[0m"
 
 autocannon http://localhost:8080/api/products -m GET \
   --duration 10 --connections 5 \
-  --maxOverallRequests 100000 \
+  --maxOverallRequests 100000
 
