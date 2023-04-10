@@ -26,7 +26,9 @@ Remember to chmod the execution permission:
 ```bash
 chmod +x ./bench/v1.bash
 ```
+
 My machine's specifications:
+
 ```bash
 OS: Ubuntu 22.10 x86_64 
 Host: Latitude 5420 
@@ -40,6 +42,7 @@ CPU: 11th Gen Intel i7-1185G7 (8) @ 4.
 GPU: Intel TigerLake-LP GT2
 Memory: 8181MiB / 31491MiB 
 ```
+
 ### Benchmark v1
 
 Branch: `feat/v1-import-and-export-normally`
@@ -48,15 +51,15 @@ The first version i just focusing on implementing a lightweight API.
 Then it just contains sample endpoints, apply main techniques like: connection pooling, bulk insert, caching file.
 <details>
   <summary>Benchmark v1 result</summary>
-    
+
 #### TEST 10s with 5 connections and csv file of 1000 rows
 
 Running 10s test `@http://localhost:8080/api/products/import`
 5 connections
 
-| Stat    | 2.5%   | 50%    | 97.5%  | 99%    | Avg       | Stdev    | Max    |
-|---------|--------|--------|--------|--------|-----------|----------|--------|
-| Latency | 166 ms | 187 ms | 265 ms | 374 ms | 192.59 ms | 30.23 ms | 398 ms |
+| Stat    | 2.5%  | 50%   | 97.5% | 99%   | Avg      | Stdev   | Max   |
+|---------|-------|-------|-------|-------|----------|---------|-------|
+| Latency | 29 ms | 31 ms | 44 ms | 48 ms | 33.28 ms | 4.78 ms | 74 ms |
 
 | Stat      | 1%      | 2.5%    | 50%     | 97.5%   | Avg     | Stdev | Min     |
 |-----------|---------|---------|---------|---------|---------|-------|---------|
@@ -108,8 +111,8 @@ Running 10s test `@http://localhost:8080/api/products`
 | Bytes/Sec | 8.68 MB | 8.68 MB | 17.5 MB | 17.9 MB | 15.5 MB | 3.31 MB | 8.67 MB |
 
 Req/Bytes counts sampled once per second.
- of samples: 10
+of samples: 10
 
 1k requests in 10.01s, 155 MB read
-    
+
 </details>
