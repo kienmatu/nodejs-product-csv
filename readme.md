@@ -49,8 +49,6 @@ Branch: `feat/v1-import-and-export-normally`
 
 The first version i just focusing on implementing a lightweight API.
 Then it just contains sample endpoints, apply main techniques like: connection pooling, bulk insert, caching file.
-<details>
-  <summary>Benchmark v1 result</summary>
 
 #### TEST 10s with 5 connections and csv file of 1000 rows
 
@@ -115,4 +113,3 @@ of samples: 10
 
 1k requests in 10.01s, 155 MB read
 
-</details>
