@@ -1,26 +1,33 @@
 import {Category, Product} from "../models/index.js";
 import csv from "fast-csv"
 import fs from "fs";
-import {createObjectCsvWriter} from "csv-writer";
+import {createObjectCsvWriter, createArrayCsvWriter} from "csv-writer";
 import appDir from "../utils/pathHelper.js";
-export const findOneProduct = (req, res) => {
+
+export const findOneProduct = async (req, res) => {
     const id = req.params.id;
-    Product.findByPk(id)
-        .then(data => {
-            if (data) {
-                res.send(data);
-            } else {
-                res.status(404).send({
-                    message: `Cannot find Product with id=${id}.`
-                });
-            }
+    try {
+        const product = await Product.findByPk(id, {
+            include: [{
+                model: Category
+            }],
         })
-        .catch(err => {
-            res.status(500).send({
-                message: `Error retrieving Product with id=${id}`,
-                error: err
+        if (product) {
+            res.send({
+                message: 'OK',
+                data: product
             });
+        } else {
+            res.status(404).send({
+                message: `Cannot find Product with id=${id}.`
+            });
+        }
+    } catch (err) {
+        res.status(500).send({
+            message: `Error retrieving Product with id=${id}`,
+            error: err
         });
+    }
 }
 
 export const findManyProducts = async (req, res) => {
@@ -37,8 +44,7 @@ export const findManyProducts = async (req, res) => {
             message: 'OK',
             data: products
         });
-    }
-    catch(err) {
+    } catch (err) {
         console.error(err);
         res.status(500).send({
             message: 'internal error',
@@ -110,26 +116,34 @@ export const importProducts = async (req, res) => {
 }
 
 export const exportProducts = async (req, res) => {
-    let limit = req.params.limit;
+    let limit = req.query.limit || 100000;
     if (!limit || limit > 1000000) {
         limit = 1000000;
     }
     const products = await Product.findAll({
-        limit: limit
-        });
+        limit: limit,
+        attributes: ['name', 'price', 'description'],
+        include: [{
+            model: Category,
+            attributes: ['code']
+        }],
+        subQuery: false,
+        raw: true
+    });
+    console.log(products)
     const dir = appDir + 'static/exports';
 
     if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir, {recursive: true});
     }
-    const fileName = `${dir}/${Date.now()}-products.csv`;
+    const fileName = `${dir}/${process.hrtime.bigint()}-products.csv`;
     const csvWriter = createObjectCsvWriter({
         path: fileName,
         header: [
             {id: 'name', title: 'name'},
             {id: 'price', title: 'price'},
+            {id: 'category.code', title: 'categoryCode'},
             {id: 'description', title: 'description'},
-            {id: 'categoryCode', title: 'categoryCode'},
         ]
     });
     await csvWriter.writeRecords(products)
@@ -137,6 +151,7 @@ export const exportProducts = async (req, res) => {
                 console.log('CSV file exported successfully');
                 await fs.readFile(fileName, "UTF-8", function (err, data) {
                     if (err) {
+                        console.error(err)
                         res.status(500).send(err)
                     }
                     res.setHeader('Content-Type', 'text/csv');
@@ -146,6 +161,7 @@ export const exportProducts = async (req, res) => {
             }
         )
         .catch(async (err) => {
+            console.error(err)
             res.status(500).send(err);
         })
         .finally(async () => {
