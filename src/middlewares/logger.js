@@ -10,7 +10,7 @@ const logger = (req, res, next) => {
         } else {
             color = colors.green.bold;
         }
-        console.log(color(`${req.method}: ${res.statusCode}`), new Date().toISOString());
+        console.log(color(`${req.method} ${req.originalUrl}: ${res.statusCode}`), new Date().toISOString());
     })
     next();
 }
