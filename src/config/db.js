@@ -6,8 +6,8 @@ const dbConfig = {
     DB: "postgres",
     dialect: "postgres",
     pool: {
-        max: 4, // max pool size
-        min: 1, // min pool size
+        max: 8, // max pool size
+        min: 0, // min pool size
         acquire: 3000, // timeout to wait connection in  milliseconds
         idle: 10000 // idle time in milliseconds
     }

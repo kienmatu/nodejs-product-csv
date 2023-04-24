@@ -24,7 +24,7 @@ I use [autocannon](https://github.com/mcollina/autocannon) for load/ stress test
 Remember to chmod the execution permission:
 
 ```bash
-chmod +x ./bench/v1.bash
+chmod +x ./bench/bench.bash
 ```
 
 My machine's specifications:
